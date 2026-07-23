@@ -1,0 +1,51 @@
+server:
+port: 8086
+
+spring:
+application:
+name: api-gateway
+cloud:
+gateway:
+server:
+webflux:
+routes:
+- id: flight-service
+uri: http://localhost:8080
+predicates:
+- Path=/v1/api/flights,/v1/api/flights/**,/api/v1/flights,/api/v1/flights/**
+
+- id: gate-service
+uri: http://localhost:8081
+predicates:
+- Path=/v1/api/gates,/v1/api/gates/**,/api/v1/gates,/api/v1/gates/**
+
+- id: crew-service
+uri: http://localhost:8082
+predicates:
+- Path=/v1/api/crew,/v1/api/crew/**,/api/v1/crew,/api/v1/crew/**
+
+- id: fuel-service
+uri: http://localhost:8083
+predicates:
+- Path=/v1/api/fuel,/v1/api/fuel/**,/api/v1/fuel,/api/v1/fuel/**
+
+- id: baggage-service
+uri: http://localhost:8084
+predicates:
+- Path=/v1/api/baggage,/v1/api/baggage/**,/api/v1/baggage,/api/v1/baggage/**
+
+- id: operations-service
+uri: http://localhost:8085
+predicates:
+- Path=/v1/api/operations,/v1/api/operations/**,/api/v1/operations,/api/v1/operations/**
+
+management:
+endpoints:
+web:
+exposure:
+include: "*"
+
+logging:
+level:
+org.springframework.cloud.gateway: DEBUG
+reactor.netty: INFO
